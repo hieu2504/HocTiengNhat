@@ -34,7 +34,7 @@ public class AlphabetFragment extends Fragment implements AlphabetView {
     private List<Alphabet> list;
     private AlphabetAdapter alphabetAdapter;
     private AlphabetPresenter presenter;
-    AlphabetView alphabetView;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
