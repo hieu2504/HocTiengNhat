@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="vn.lucifer.hoctiengnhat.ui.home.AlphabetFragment"
+        android:name="vn.lucifer.hoctiengnhat.ui.hiragana.HiraganaFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="vn.lucifer.hoctiengnhat.ui.dashboard.DashboardFragment"
+        android:name="vn.lucifer.hoctiengnhat.ui.katakana.KatakanaFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 

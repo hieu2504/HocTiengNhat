@@ -1,13 +1,16 @@
 package vn.lucifer.hoctiengnhat.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,8 +23,10 @@ import java.util.List;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+import vn.lucifer.hoctiengnhat.DrawHiraganaActivity;
 import vn.lucifer.hoctiengnhat.R;
-import vn.lucifer.hoctiengnhat.adapter.AlphabetAdapter;
+import vn.lucifer.hoctiengnhat.adapter.AlphabetHiraganaAdapter;
+import vn.lucifer.hoctiengnhat.adapter.AlphabetKatakanaAdapter;
 import vn.lucifer.hoctiengnhat.model.Alphabet;
 import vn.lucifer.hoctiengnhat.view.AlphabetView;
 
@@ -41,9 +46,18 @@ public class AlphabetPresenter {
         List<Alphabet> list = alphabetView.getList();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 5));
-        AlphabetAdapter alphabetAdapter = new AlphabetAdapter(context, list);
-        recyclerView.setAdapter(alphabetAdapter);
+        AlphabetHiraganaAdapter alphabetHiraganaAdapter = new AlphabetHiraganaAdapter(context, list);
+        recyclerView.setAdapter(alphabetHiraganaAdapter);
     }
+
+    public void loadRecycleview_kata(RecyclerView recyclerView){
+        List<Alphabet> list = alphabetView.getList();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 5));
+        AlphabetKatakanaAdapter alphabetKatakanaAdapter = new AlphabetKatakanaAdapter(context, list);
+        recyclerView.setAdapter(alphabetKatakanaAdapter);
+    }
+
 
     public void showDialog(final Alphabet a){
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -52,24 +66,23 @@ public class AlphabetPresenter {
         builder.setView(dialog);
 
 
-        TextView alphabetCardviewTvRoma, alphabetCardviewTvOk;
+        TextView  alphabetCardviewTvOk;
         ImageView alphabetCardviewImgPronun;
-        GifImageView alphabetCardviewTvHira1, alphabetCardviewTvKata1;
+        GifImageView alphabetCardviewTvHira1;
+        Button btn_Tap_Viet;
 
-        alphabetCardviewTvHira1 = (GifImageView) dialog.findViewById(R.id.alphabet_cardview_tv_hira1);
-        alphabetCardviewTvKata1 = (GifImageView) dialog.findViewById(R.id.alphabet_cardview_tv_kata1);
+        alphabetCardviewTvHira1 = dialog.findViewById(R.id.alphabet_cardview_tv_hira1);
 
-        alphabetCardviewTvRoma = (TextView) dialog.findViewById(R.id.alphabet_cardview_tv_roma);
-        alphabetCardviewImgPronun = (ImageView) dialog.findViewById(R.id.alphabet_cardview_img_pronun);
-        alphabetCardviewTvOk = (TextView) dialog.findViewById(R.id.alphabet_cardview_tv_ok);
+
+        alphabetCardviewImgPronun =dialog.findViewById(R.id.alphabet_cardview_img_pronun);
+        alphabetCardviewTvOk = dialog.findViewById(R.id.alphabet_cardview_tv_ok);
+        btn_Tap_Viet = dialog.findViewById(R.id.alphabet_btnTapViet);
 
 
         getSound(a.sound);
 
         getGifImage(a.gif_hiragana, alphabetCardviewTvHira1);
-        getGifImage(a.gif_katakana, alphabetCardviewTvKata1);
 
-        alphabetCardviewTvRoma.setText(a.romari);
 
         alphabetCardviewTvOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +94,76 @@ public class AlphabetPresenter {
             @Override
             public void onClick(View view) {
                 getSound(a.sound);
+            }
+        });
+        btn_Tap_Viet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, DrawHiraganaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Key_1", "hira"); // Truyền một String
+                bundle.putString("Key_2", a.gif_katakana);                      // Truyền một Int
+                bundle.putString("Key_4", a.gif_hiragana);                      // Truyền một Int
+                bundle.putString("Key_3", a.romari);               // Truyền một Boolean
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
+
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+    }
+
+    public void showDialog_kata(final Alphabet a){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        final View dialog = LayoutInflater.from(context).inflate(R.layout.dialog_alphabet_kata_detail, null);
+        builder.setView(dialog);
+
+
+        TextView  alphabet_kata_cardview_tv_ok;
+        ImageView alphabet_kata_cardview_img_pronun;
+        GifImageView alphabet_cardview_tv_kata;
+        Button alphabet_kata_btnTapViet;
+
+        alphabet_cardview_tv_kata = dialog.findViewById(R.id.alphabet_cardview_tv_kata);
+
+
+        alphabet_kata_cardview_img_pronun =dialog.findViewById(R.id.alphabet_kata_cardview_img_pronun);
+        alphabet_kata_cardview_tv_ok = dialog.findViewById(R.id.alphabet_kata_cardview_tv_ok);
+        alphabet_kata_btnTapViet = dialog.findViewById(R.id.alphabet_kata_btnTapViet);
+
+
+        getSound(a.sound);
+
+        getGifImage(a.gif_katakana, alphabet_cardview_tv_kata);
+
+
+        alphabet_kata_cardview_tv_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        alphabet_kata_cardview_img_pronun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSound(a.sound);
+            }
+        });
+        alphabet_kata_btnTapViet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, DrawHiraganaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Key_1", "kata"); // Truyền một String
+                bundle.putString("Key_2", a.gif_katakana);
+                bundle.putString("Key_4", a.gif_hiragana);   // Truyền một Int
+                bundle.putString("Key_3", a.romari);               // Truyền một Boolean
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
 

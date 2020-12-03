@@ -15,6 +15,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import vn.lucifer.hoctiengnhat.model.Alphabet;
+import vn.lucifer.hoctiengnhat.model.Gramma;
+import vn.lucifer.hoctiengnhat.model.Word1;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static String TAG = "DataBaseHelper"; // Tag just for the LogCat window
     //destination path (location) of our database on device
@@ -87,6 +91,126 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if (mDataBase != null)
             mDataBase.close();
         super.close();
+    }
+
+    public List<Gramma> getAllGrammaN5(){
+        List<Gramma> grammaList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String SQL= "SELECT id,lesson_id,name,uname,content,tag,favorite FROM grammar WHERE id<149";
+        Cursor cursor = sqLiteDatabase.rawQuery(SQL,null);
+        if(cursor !=null){
+            if(cursor.getCount()>0){
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()){
+                    Gramma gramma = new Gramma();
+
+                    gramma.id = cursor.getInt(cursor.getColumnIndex("id"));
+                    gramma.lesson_id=cursor.getInt(cursor.getColumnIndex("lesson_id"));
+                    gramma.name=cursor.getString(cursor.getColumnIndex("name"));
+                    gramma.uname = cursor.getString(cursor.getColumnIndex("uname"));
+                    gramma.content=cursor.getString(cursor.getColumnIndex("content"));
+                    gramma.tag=cursor.getString(cursor.getColumnIndex("tag"));
+                    gramma.favorite=cursor.getInt(cursor.getColumnIndex("favorite"));
+                    grammaList.add(gramma);
+
+                    cursor.moveToNext();
+                }
+                cursor.close();
+            }
+        }
+        return grammaList;
+    }
+
+    public List<Gramma> getAllGrammaN4(){
+        List<Gramma> grammaList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String SQL= "SELECT id,lesson_id,name,uname,content,tag,favorite FROM grammar WHERE id>149";
+        Cursor cursor = sqLiteDatabase.rawQuery(SQL,null);
+        if(cursor !=null){
+            if(cursor.getCount()>0){
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()){
+                    Gramma gramma = new Gramma();
+
+                    gramma.id = cursor.getInt(cursor.getColumnIndex("id"));
+                    gramma.lesson_id=cursor.getInt(cursor.getColumnIndex("lesson_id"));
+                    gramma.name=cursor.getString(cursor.getColumnIndex("name"));
+                    gramma.uname = cursor.getString(cursor.getColumnIndex("uname"));
+                    gramma.content=cursor.getString(cursor.getColumnIndex("content"));
+                    gramma.tag=cursor.getString(cursor.getColumnIndex("tag"));
+                    gramma.favorite=cursor.getInt(cursor.getColumnIndex("favorite"));
+                    grammaList.add(gramma);
+
+                    cursor.moveToNext();
+                }
+                cursor.close();
+            }
+        }
+        return grammaList;
+    }
+
+    public List<Gramma> getAllGrammaN5Search(String search_content){
+        List<Gramma> grammaList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String SQL= "SELECT id,lesson_id,name,uname,content,tag,favorite FROM grammar WHERE name LIKE "+"'%"+search_content+"%'";
+        Cursor cursor = sqLiteDatabase.rawQuery(SQL,null);
+        if(cursor !=null){
+            if(cursor.getCount()>0){
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()){
+                    Gramma gramma = new Gramma();
+
+                    gramma.id = cursor.getInt(cursor.getColumnIndex("id"));
+                    gramma.lesson_id=cursor.getInt(cursor.getColumnIndex("lesson_id"));
+                    gramma.name=cursor.getString(cursor.getColumnIndex("name"));
+                    gramma.uname = cursor.getString(cursor.getColumnIndex("uname"));
+                    gramma.content=cursor.getString(cursor.getColumnIndex("content"));
+                    gramma.tag=cursor.getString(cursor.getColumnIndex("tag"));
+                    gramma.favorite=cursor.getInt(cursor.getColumnIndex("favorite"));
+                    grammaList.add(gramma);
+
+                    cursor.moveToNext();
+                }
+                cursor.close();
+            }
+        }
+        return grammaList;
+    }
+
+    public List<Alphabet> getAllAlphabet() {
+        List<Alphabet> alphabets = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String SQL = "SELECT * FROM Alphabet";
+        Cursor cursor = sqLiteDatabase.rawQuery(SQL, null);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+
+                    Alphabet alphabet = new Alphabet();
+
+                    alphabet.id = cursor.getInt(cursor.getColumnIndex("id"));
+                    alphabet.hiragana = cursor.getString(cursor.getColumnIndex("hiragana"));
+                    alphabet.katakana = cursor.getString(cursor.getColumnIndex("katakana"));
+                    alphabet.romari = cursor.getString(cursor.getColumnIndex("romari"));
+                    alphabet.sound = cursor.getString(cursor.getColumnIndex("sound"));
+                    alphabet.gif_hiragana = cursor.getString(cursor.getColumnIndex("gif_hiragana"));
+                    alphabet.gif_katakana = cursor.getString(cursor.getColumnIndex("gif_katakana"));
+                    alphabets.add(alphabet);
+                    cursor.moveToNext();
+
+                }
+                cursor.close();
+            }
+        }
+
+        return alphabets;
     }
 
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:layout_marginTop="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="5dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <com.ramotion.foldingcell.FoldingCell
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/folding_cell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            ​
+            <LinearLayout
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"
+                android:id="@+id/cell_content_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorBlue"
+                android:visibility="gone">
+                <TextView
+                    android:textColor="@color/white"
+                    android:id="@+id/tv_Gramma_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            ​
+            <FrameLayout
+                android:id="@+id/cell_title_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    cardCornerRadius="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:padding="8dp"
+                        android:id="@+id/tv_Gramma_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
+            ​
+        </com.ramotion.foldingcell.FoldingCell>
+    </androidx.cardview.widget.CardView>
+

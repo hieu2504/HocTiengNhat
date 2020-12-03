@@ -1,14 +1,12 @@
 package vn.lucifer.hoctiengnhat.adapter;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import vn.lucifer.hoctiengnhat.ui.dashboard.DashboardFragment;
-import vn.lucifer.hoctiengnhat.ui.home.AlphabetFragment;
+import vn.lucifer.hoctiengnhat.ui.katakana.KatakanaFragment;
+import vn.lucifer.hoctiengnhat.ui.hiragana.HiraganaFragment;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
     int countTab;
@@ -22,15 +20,12 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                Log.e("AAAAAAAAAA","0");
-                AlphabetFragment alphabetFragment = new AlphabetFragment();
+                HiraganaFragment alphabetFragment = new HiraganaFragment();
                 return alphabetFragment;
             case 1:
-                Log.e("AAAAAAAAAA","1");
-                DashboardFragment dashboardFragment = new DashboardFragment();
-                return dashboardFragment;
+                KatakanaFragment katakanaFragment = new KatakanaFragment();
+                return katakanaFragment;
             default:
-                Log.e("AAAAAAAAAA","zzzzzzzzzzzzzzzz");
                 return null;
         }
     }
